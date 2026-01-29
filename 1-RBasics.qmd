@@ -100,16 +100,21 @@ Logical Operators allow you to combine or change the results of comparisons.
 ```
 (@) Explain, what does the code on each line above do? 
 
->
+> 5 equals 10
+3 is less than 4
+five does not equal 10
+five does not equal 5
+three is equal to four or three
+three does not equal four and three does not equal 5
 
 (@) Create your own comparison. 
 ```{r}
-
+3 + 3 != 18
 ```
 
 (@) Can you write code that checks if a year is between 1970 AND 1980? 
 ```{r}
-
+1979 > 1970 & 1979 <1980
 ```
 
 ---
