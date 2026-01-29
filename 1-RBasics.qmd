@@ -28,7 +28,12 @@ Numbers can be used to do arithmetic.
 ```
 
 (@) You try, multiple two numbers. 
+```{r}
 
+
+2 * 6 / 4
+
+```
 
 (@) Can you multiply two numbers and then divide by the result? 
 
@@ -39,7 +44,7 @@ The next type of value is a **string**. Strings are lines of text. Sometimes the
 
 (@) Try to create your own string.
 ```{r}
-
+"R is fun"
 ```
 
 You can't add strings using `+` like you can numbers. But there is a function called `paste()` which concatenates character vectors into one. This function is _very_ useful and one you'll use a lot in a variety of circumstances. Here's what that looks like: 
@@ -50,12 +55,12 @@ paste("Hello", "Clemson Graduate Students")
 
 (@) Try it, add two strings together like the above example. 
 ```{r}
-
+paste("Hello", "my friends, let's unionize")
 ```
 
 (@) Can you explain what happened in 2-3 sentences? 
 
-> 
+> Sure, paste add two seperate strings or characters together in this case, it was left leaning encouraging friends to come together in order to claim greater autonomy in the workplace. 
 
 The last type are **logical** values like `TRUE` and `FALSE`. (Note that these are all caps.)
 
