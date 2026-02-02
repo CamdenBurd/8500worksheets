@@ -1,3 +1,10 @@
+
+
+to check documentation: 
+help(setNames)
+
+
+
 nrow(BostonWomenVoters)
 rownumber < nrow(BostonWomenVoters)
 rownumber < 100
@@ -12,3 +19,5 @@ floor(gayguides$Year)
 min(gayguides$Year)
 max(gayguides$Year)
 data(BostonWomenVoters)
+x[c(3,3)]
+

@@ -41,7 +41,8 @@ x[c(3,3)]
 ```
 (@) Create your own vector and return three values using the subsetting method above. 
 ```{r}
-
+y <- c(2, 4, 6, 8, 10)
+y[c(2,4)]
 ```
 
 
@@ -52,7 +53,7 @@ x[-c(3, 1)]
 
 (@) What happened here? Describe this in your own words. 
 
->
+> it listed out the entire vector omitting the third and first items in the list. 
 
 You can use either positive or negative integers to subset a vector but you **cannot mix the two**.
 
@@ -69,7 +70,7 @@ x[x > 7]
 
 (@) What is going on in each of the lines above? Describe it in your own words. 
 
->
+> In the first instance (true and false) we are assigning true or false values to each item in the list. So it is run, only the true items are coming back, the false omitted. In the second instance we are asking for only items in the list greater than the number 7 to returned. 
 
 Nothing returns the original vector. This isn't that useful here but can come in handy when you have more complex structures like matrices and arrays. 
 ```{r}
@@ -82,6 +83,8 @@ If your vector is named, you can also use character vectors to return elements w
 y[c("d")]
 ```
 (@) What happened here? Explain this in your own words. 
+
+I *think* that what happened is that you made a variable, y, then assigned the first four items in the x variable character names, a-d. 
 
 #### Matrices
 
