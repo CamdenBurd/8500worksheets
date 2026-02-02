@@ -74,3 +74,10 @@ houswives <- BostonWomenVoters[housewife,]
 range(houswives$Age)
 length(houswives)
 length(houswives$Occupation)
+
+
+BostonWomenVoters[, "Occupation"] 
+#brings back all the rows with this variable in the column
+
+BostonWomenVoters["Occupation",] 
+#brings back all the columns with this variable in the row
