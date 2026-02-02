@@ -20,4 +20,7 @@ min(gayguides$Year)
 max(gayguides$Year)
 data(BostonWomenVoters)
 x[c(3,3)]
+library(DigitalMethodsData)
 data(gayguides)
+head(gayguides)
+mean(gayguides$Year)
