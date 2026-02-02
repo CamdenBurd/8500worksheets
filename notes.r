@@ -20,4 +20,4 @@ min(gayguides$Year)
 max(gayguides$Year)
 data(BostonWomenVoters)
 x[c(3,3)]
-
+data(gayguides)
