@@ -104,4 +104,9 @@ midwest <- statepopulations$STATE[c("Michigan", "Minneosta")]
 midwest <- statepopulations[c(22, 25, 27, 29, 37, 39, 43, 47, 57, 59, 68, 79),]
 midwest[, 16:28]
 
+
+library(magrittr)
+
 gayguides[gayguides$state == "SC", "title"]
+
+gayguides$title %>% head(20)
