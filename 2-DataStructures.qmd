@@ -234,13 +234,17 @@ Hint: Break this into steps:
    - Step 3: Combine these conditions
    - Step 4: Use this combined condition to subset the data
 ```{r}
-
+california_spots <- gayguides[gayguides$state == "CA",]
+california1970s <- california_spots[california_spots$Year  >= 1970 & california_spots$Year <=1979, ]
 ```
 
 (@) The `amenityfeatures` column contains codes about each location. Can you find all entries that mention "(G)" for girls/women anywhere in their amenity features during 1975? How many locations specifically catered to women that year?
 ```{r}
-# Hint: You'll need to search within the amenityfeatures text
-# The str_detect() function might be useful, or you could use grepl()
+
+girlspots <- gayguides %>% filter(str_detect(amenityfeatures, "G"))
+girlspots1975 <- girlspots[girlspots$Year == 1975, ]
+
+
 ```
 
 ### Challenge 2: Boston Women Voters

@@ -106,7 +106,23 @@ midwest[, 16:28]
 
 
 library(magrittr)
+library(tidyverse)
 
 gayguides[gayguides$state == "SC", "title"]
 
 gayguides$title %>% head(20)
+#Using the `gayguides` data, find all locations in California,
+#during the 1970s (1970-1979).
+
+
+california_spots <- gayguides[gayguides$state == "CA",]
+california1970s <- california_spots[california_spots$Year  >= 1970 & california_spots$Year <=1979, ]
+
+#(@) The `amenityfeatures` column contains codes about each location. 
+#Can you find all entries that mention "(G)" for girls/women anywhere in 
+#their amenity features during 1975? How many locations specifically catered to 
+#women that year?
+
+
+girlspots <- gayguides %>% filter(str_detect(amenityfeatures, "G"))
+girlspots1975 <- girlspots[girlspots$Year == 1975, ]
