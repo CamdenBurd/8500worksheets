@@ -32,7 +32,7 @@ data(gayguides)
 ## by position 
 ## by logic (using true and false values)
 
-Everything between 1970 and 1979
+#Everything between 1970 and 1979
 year_1970s <- gayguides$Year <= 1970 & gayguides$Year <= 1979
 head(year_1970s)
 gayguides[year_1970s,]
@@ -57,8 +57,8 @@ library(DigitalMethodsData)
 data(DigitalMethodsData)
 data(BostonWomenVoters)
 
-Find all women whose occupation was housewife. 
-How many were there? And what was the age range?
+#Find all women whose occupation was housewife. 
+#How many were there? And what was the age range?
 
 housewife <- BostonWomenVoters$Occupation == "housewife"
 housewife
@@ -93,3 +93,15 @@ devtools::install_github("regan008/DigitalMethodsData")
 library(DigitalMethodsData)
 data(gayguides)
 head(gayguides)
+objects(gayguides)
+view(DigitalMethodsData)
+library(DigitalMethodsData)
+data(statepopulations)
+
+statepopulations[67,5:28]
+
+midwest <- statepopulations$STATE[c("Michigan", "Minneosta")]
+midwest <- statepopulations[c(22, 25, 27, 29, 37, 39, 43, 47, 57, 59, 68, 79),]
+midwest[, 16:28]
+
+gayguides[gayguides$state == "SC", "title"]
