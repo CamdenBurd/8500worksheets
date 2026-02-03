@@ -27,6 +27,7 @@ mean(gayguides$Year)
 data(gayguides)
 
 
+
 #subsetting is giving directions within R. There are roughly three subsetting patterns.
 ## by position 
 ## by logic (using true and false values)
@@ -81,3 +82,14 @@ BostonWomenVoters[, "Occupation"]
 
 BostonWomenVoters["Occupation",] 
 #brings back all the columns with this variable in the row
+
+library(tidyverse)
+library(DigitalMethodsData)
+help(DigitalMethodsData)
+library(DigitalMethodsData)
+
+install.packages(DigitalMethodsData)
+devtools::install_github("regan008/DigitalMethodsData")
+library(DigitalMethodsData)
+data(gayguides)
+head(gayguides)
