@@ -126,3 +126,12 @@ california1970s <- california_spots[california_spots$Year  >= 1970 & california_
 
 girlspots <- gayguides %>% filter(str_detect(amenityfeatures, "G"))
 girlspots1975 <- girlspots[girlspots$Year == 1975, ]
+
+#the one above and below this do the same thing
+
+data(gayguides)
+gs1975 <- gayguides[gayguides$Year == 1975, ] %>% filter(str_detect(amenityfeatures, "G"))
+
+
+
+
