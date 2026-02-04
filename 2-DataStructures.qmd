@@ -245,7 +245,6 @@ girlspots <- gayguides %>% filter(str_detect(amenityfeatures, "G"))
 girlspots1975 <- girlspots[girlspots$Year == 1975, ]
 
 
-
 #this would also work
 
 gs1975 <- gayguides[gayguides$Year == 1975, ] %>% filter(str_detect(amenityfeatures, "G"))

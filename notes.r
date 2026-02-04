@@ -134,4 +134,9 @@ gs1975 <- gayguides[gayguides$Year == 1975, ] %>% filter(str_detect(amenityfeatu
 
 
 
+library(DigitalMethodsData)
+library(tidyverse)
+library(magrittr)
+data(gayguides)
 
+help(grepl)
