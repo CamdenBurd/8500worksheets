@@ -255,7 +255,7 @@ gs1975 <- gayguides[gayguides$Year == 1975, ] %>% filter(str_detect(amenityfeatu
 
 Load the Boston Women Voters dataset and use subsetting to answer these historical questions:
 ```{r}
-
+data(BostonWomenVoters)
 ```
 
 (@) Find all women voters who were over 50 years old. Then find all the voters who were under the age of 50. How many were there? What can you say about the age distribution of women voters?
