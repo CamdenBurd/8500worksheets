@@ -138,5 +138,19 @@ library(DigitalMethodsData)
 library(tidyverse)
 library(magrittr)
 data(gayguides)
-
+data(BostonWomenVoters)
 help(grepl)
+
+order(BostonWomenVoters$Age)
+BostonWomenVoters[sort(BostonWomenVoters$Age),]
+
+
+age_voter <- BostonWomenVoters[order(BostonWomenVoters$Age),]
+age_voter_filtered <- age_voter[!is.na(age_voter$Age), ]
+voter_filtered_tail <- tail(age_voter_filtered, n=5)
+print(voter_filtered_tail$Occupation)
+
+
+age_voter2 <- BostonWomenVoters[order(BostonWomenVoters$Age),]
+voter_filtered_tail2 <- tail(age_voter2, n=5)
+print(voter_filtered_tail2$Occupation)

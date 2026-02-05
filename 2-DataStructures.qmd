@@ -260,10 +260,17 @@ data(BostonWomenVoters)
 
 (@) Find all women voters who were over 50 years old. Then find all the voters who were under the age of 50. How many were there? What can you say about the age distribution of women voters?
 ```{r}
+
+over_50 <- BostonWomenVoters[BostonWomenVoters$Age < 50,]
+under_50 <- BostonWomenVoters[BostonWomenVoters$Age >50,]
+
+
 ```
 
 (@) Can you create a subset that includes only women voters who lived on "Main" street (the street name contains "Main")? How many were there? # Hint: You'll need to search within the street column. This will require a bit of googling and reading documentation. Look for a function that will allow you to search within a column.
 ```{r}
+
+lives_on_main <- BostonWomenVoters[grep("Main", BostonWomenVoters$Street.of.Residence.on.April.1),]
 
 ```
 
@@ -271,4 +278,19 @@ data(BostonWomenVoters)
 ```{r}
 # Hint: You might need to order the data first, then subset
 # The order() function could be helpful
+
+# this gets us the last 5 in the list, sorted by age.
+
+age_voter2 <- BostonWomenVoters[order(BostonWomenVoters$Age),]
+voter_filtered_tail2 <- tail(age_voter2, n=5)
+print(voter_filtered_tail2$Occupation)
+
+
+#however, the last five do not have ages, so the last five with ages:
+
+age_voter <- BostonWomenVoters[order(BostonWomenVoters$Age),]
+age_voter_filtered <- age_voter[!is.na(age_voter$Age), ]
+voter_filtered_tail <- tail(age_voter_filtered, n=5)
+print(voter_filtered_tail$Occupation)
+
 ```
