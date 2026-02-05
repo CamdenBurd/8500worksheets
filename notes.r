@@ -154,3 +154,5 @@ print(voter_filtered_tail$Occupation)
 age_voter2 <- BostonWomenVoters[order(BostonWomenVoters$Age),]
 voter_filtered_tail2 <- tail(age_voter2, n=5)
 print(voter_filtered_tail2$Occupation)
+
+
