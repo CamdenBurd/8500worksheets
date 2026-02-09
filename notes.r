@@ -141,6 +141,70 @@ data(gayguides)
 data(BostonWomenVoters)
 help(grepl)
 
+#if statement and corresponding else and corresponding if esle 
+
+# Two kinds of loops. 1) "FOR" loops - do something for each value in the sequence
+# 2) while loops - do something while the a condition is true, typicaly used with a counter (i=1) that is increased at the end of the loop if a condition is true. (i=i+1)
+
+
+#For loops
+presidents <- c("Washington", "Jefferson", "Adams")
+
+for (i in 1:length(presidents)) {
+    print(presidents[i])
+}
+
+
+#While Loops (control c will stop the forever loop)
+i <- 1
+while(i < 6){
+    print(i)
+    i <- i+1
+}
+
+
+#function
+
+if (BostonWomenVoters$Occupation[4] == "Housewife") {
+  print("This woman is a housewife")
+} else if (BostonWomenVoters$Occupation[4] == "Stenographer") {
+  print("this woman is a stenographer")
+} else {
+  print("this woman is neither")
+}
+
+#checking for the fourth row
+if (BostonWomenVoters$Occupation[4] == "Housewife") {
+  print("This woman is a housewife")
+} else if (BostonWomenVoters$Occupation[4] == "Stenographer") {
+  print("this woman is a stenographer")
+} else {
+  print("this woman is neither")
+}
 
 
 
+#checking for the name as well
+for (i in 1:length(BostonWomenVoters$Occupation)){
+    if (BostonWomenVoters$Occupation[i] == "Housewife") {
+  print(paste(BostonWomenVoters$Name[i], "is woman is a housewife"))
+} else if (paste(BostonWomenVoters$Occupation[i] == "Stenographer")) {
+  print(paste(BostonWomenVoters$Name[i], "is woman is a stenographer"))
+} else {
+  print(paste(BostonWomenVoters$Name[i], "is neither"))
+}
+}
+
+
+#function 
+h8500 <- function(){
+print("Hello 8500")
+}
+
+h8500()
+
+#function with argument
+h8500 <- function(numstudents){
+print(paste("Hello 8500, there are", numstudents, "students in this class"))
+}
+h8500(50)
