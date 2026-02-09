@@ -141,30 +141,6 @@ data(gayguides)
 data(BostonWomenVoters)
 help(grepl)
 
-order(BostonWomenVoters$Age)
-BostonWomenVoters[sort(BostonWomenVoters$Age),]
 
 
-age_voter <- BostonWomenVoters[order(BostonWomenVoters$Age),]
-age_voter_filtered <- age_voter[!is.na(age_voter$Age), ]
-voter_filtered_tail <- tail(age_voter_filtered, n=5)
-print(voter_filtered_tail$Occupation)
 
-
-age_voter2 <- BostonWomenVoters[order(BostonWomenVoters$Age),]
-voter_filtered_tail2 <- tail(age_voter2, n=5)
-print(voter_filtered_tail2$Occupation)
-
-gayguides[gayguides$state == "NY",]
-ny_places <- gayguides[gayguides$state == "NY",]
-ny_1975 <- ny_places[ny_places$Year == "1975",]
-
-ggbars <- grep("Bar", gayguides$type)
-ggbars <- gayguides[grep("Bar", gayguides$type),]
-
-gg_1970s <- gayguides[gayguides$Year <= 1975 & gayguides$Year>= 1970,]
-fl_1970s <- gg_1970s[gg_1970s$state == "FL",]
-count()gayguides[gayguides$state == "TX",]
-
-gg1975 <- gayguides[gayguides$Year == "1975",]
-ma_ri_1975 <- gg1975 %>% filter(gg1975$state %in% c("MA", "RI"))
