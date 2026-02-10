@@ -67,22 +67,43 @@ if (x > 90) {
 
 (@) You are teaching History 100 for Clemson. Write an `if` statement that calculates whether the enrollment cap of 30 on your class has been met. 
 ```{r}
-
+hist_100 <- 35
+if (hist_100 > 30) print("enrollment has been met")
 ```
 
 (@) Create a list of presidents and store it in a variable. Use an `if` statement to check if the number of presidents in the list is more than 5. If its not, indicate that too. 
 ```{r}
+presidents <- c("Washington", "Adams", "Jefferson", "Madison")
 
+if (length(presidents) > 5) {
+  print ("this is the first five presidents")
+} else if (length(presidents) < 5) {
+  print ("there are not five presidents here")
+   
+}
 ```
 
 (@) You can also use an if statement to check a variable in a dataframe. How might you use an if statement to check if the GayGuides dataset contains any year after 1990? (Hint: first try to figure out how to determine the latest year in the dataframe and then build an if statement that checks that and prints something out if its true or false. You should think about what kind of value in contained in the Year column, how to access it, and how to check for the latest value.) 
 
 ```{r}
+
+gayguides_years <- gayguides[order(gayguides$Year),]
+
+
+last_gg_item <- tail(gayguides_years, n=1)
+print(last_gg_item)
+
+if(last_gg_item$Year > 1990){
+  print("There is a year beyond 1990")
+} else {
+   print("There is no entry beyond 1990")
+}
+
 ```
 
 (@) Reflect on the question above. How did you figure this out? What was the process you went through to build this chunk of code?
 
-> 
+> It took too long but I got there. Order the Gayguides database by year, ascending. Then call the last item. Then have an if statement that checks in the value of the last "year" is greater than 1990. 
 
 #### Loops
 
@@ -114,21 +135,37 @@ for (p in 1:length(presidents)) {
 
 (@) Why does this work? What does `length()` do and why do we use it on `presidents`?
 
-> 
+>  length is simply running through the list of characters that you have outlined in the variable. 
 
 Create a character vector that contains the title of each of your classes this semester. Can you write a `for` loop that prints out "I am enrolled in" and the name of each of your classes? ("I am enrolled in History 8150", "I am enrolled in History 8000".....etc). Hint: you'll need a function to combine the output and some text of your choosing inside the function. 
 
 ```{r}
+spring26_courseload <- c("hist 8540", "hist 8550", "coding is fun, i'm told")
 
+for(c in 1:length(spring26_courseload)) {
+  print(paste("I am teaching or enrolled in ", spring26_courseload[c]))
+}
 ```
 
 (@) Now let's practice with data. Create a loop that prints out the first 5 titles from the gayguides dataset. Hint: You'll need to loop from 1 to 5 and access `gayguides$title[i]`
 ```{r}
+gg_first5 <- head(gayguides, n = 5)
+for(i in 1:length(gg_first5$title)) {
+  print(gg_first5$title[i])
+}
+
 
 ```
 
 (@) Can you modify the above loop to only print titles that contain the word "Bar"? (Hint: use grepl() to search for "Bar" in the title)
 ```{r}
+ggbars <- gayguides[grepl("Bar", gayguides$title),]
+
+
+for (i in 1:length(ggbars$title)) {
+  print(ggbars$title[i])
+}
+
 ```
 
 Sometimes we want our loop to terminate itself early. There are two statements that help us do that: 
