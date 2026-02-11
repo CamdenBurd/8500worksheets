@@ -210,3 +210,55 @@ print(paste("Hello 8500, there are", numstudents, "students in this class"))
 h8500(50)
 
 
+for (i in 1:length(gayguides$city)){
+  if (gayguides$city[i] != "New York City")
+    next
+  print(gayguides$title[i])
+  if (i > 5)
+    break
+
+}
+
+
+#don't forget to make a COUNT! (as seen in my issue with problem at line 218)!!!!!!!
+
+#in relation to Emma's post on Slack 
+bwv.occupation <- function (Occupation) {
+  data(BostonWomenVoters)
+
+  for (i in 1:nrow(BostonWomenVoters)) {
+    if (BostonWomenVoters$Occupation[i] == Occupation) {
+      print(BostonWomenVoters[i,])
+    } else {
+      next
+    }
+  }
+}
+
+
+# some notes from class February 11
+journals <- data.frame(
+  title = c("AHR", 
+            "JAH",
+            "WMQ",
+            "AHR",
+            "JSH"),
+  month = c("January", "March", "April", "July", "October"),
+  year = c(1920, 1920, 1920, 1921, 1921)
+)
+
+
+dir.create("journals")
+dir.create("journals/txt")
+writeLines("A profound insight", "insights.txt")
+
+writeLines(BostonWomenVoters$Occupation[1:50], "journals/bwv-jobs.txt")
+
+#AHR-January-1920.txt "A profound historical source"
+
+
+for (i in 1:nrow(journals)){
+
+writeLines("A profound historical source.", paste(journals$title[i], "-", journals$month[i], "-", journals$year[i], ".txt", sep = "") ) # nolint
+paste(journals$title[i], "-", journals$month[i], "-", journals$year[i], ".txt", sep = "") # nolint: line_length_linter.
+}

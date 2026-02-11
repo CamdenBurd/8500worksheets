@@ -216,14 +216,14 @@ for(i in 1:length(gayguides$city)){
 
 **Hint:** Create a counter to track how many you've found.
 ```{r}
-
+nyc_count <- 0
 for(i in 1:length(gayguides$city)){
   if (gayguides$city[i] != "New York City")
     next
   
   print(gayguides$title[i])
-  
-  if(i > 5)
+  nyc_count <- nyc_count + 1
+  if(nyc_count >= 5)
     break 
   
 
