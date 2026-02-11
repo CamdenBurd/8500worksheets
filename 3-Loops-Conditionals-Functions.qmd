@@ -197,9 +197,15 @@ for (i in 1:10) {
 
 (@) What happened here? Why did the loop only print 3 and 4? 
 
+The skip command ensured that numbers 1 and 2 would not be printed. The break command ended the loop at 5. 
 
 (@) What if we wanted to loop through the gay guides data? Can you write a loop that iterates through the cities in the Gay Guides data and returns the title of any location in Greenville? 
 ```{r}
+
+for(i in 1:length(gayguides$city)){
+  if (gayguides$city[i] == "Greenville")
+  print(gayguides$title[i])
+}
 
 ```
 
@@ -210,6 +216,19 @@ for (i in 1:10) {
 
 **Hint:** Create a counter to track how many you've found.
 ```{r}
+
+for(i in 1:length(gayguides$city)){
+  if (gayguides$city[i] != "New York City")
+    next
+  
+  print(gayguides$title[i])
+  
+  if(i > 5)
+    break 
+  
+
+}
+
 
 ```
 
