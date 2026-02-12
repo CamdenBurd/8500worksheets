@@ -210,15 +210,6 @@ print(paste("Hello 8500, there are", numstudents, "students in this class"))
 h8500(50)
 
 
-for (i in 1:length(gayguides$city)){
-  if (gayguides$city[i] != "New York City")
-    next
-  print(gayguides$title[i])
-  if (i > 5)
-    break
-
-}
-
 
 #don't forget to make a COUNT! (as seen in my issue with problem at line 218)!!!!!!!
 
@@ -262,3 +253,23 @@ for (i in 1:nrow(journals)){
 writeLines("A profound historical source.", paste(journals$title[i], "-", journals$month[i], "-", journals$year[i], ".txt", sep = "") ) # nolint
 paste(journals$title[i], "-", journals$month[i], "-", journals$year[i], ".txt", sep = "") # nolint: line_length_linter.
 }
+
+
+nyc_count <- 0
+for(i in 1:length(gayguides$city)){
+  if (gayguides$city[i] != "New York City")
+    next
+  
+  print(gayguides$title[i])
+  nyc_count <- nyc_count + 1
+  if(nyc_count >= 5)
+    break 
+}
+
+i <- 1
+while (i < 6) {
+  print(i)
+  i <- i+1
+}
+
+i

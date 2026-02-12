@@ -276,7 +276,7 @@ historyStudents <- function(studentname, class) {
 
 (@) Can you run this function? 
 ```{r}
-
+historyStudents("Camden", "HIST 8540")
 ```
 
 
@@ -291,10 +291,25 @@ Let's start with a simpler function to build confidence.
 
 (@) Write a function called `double()` that takes a number and returns that number multiplied by 2.
 ```{r}
+dbl_function <- function(y){
+  my_value <- y * 2
+  print(my_value)
+}
+
+dbl_function(12)
+
 ```
 
 (@) Write a function called `greet()` that takes a name and returns "Hello, [name]!" 
 ```{r}
+
+greet <- function(studentname){
+  statement <- paste("Hello ", studentname, "!", sep = "")
+  statement
+}
+
+greet("Camden")
+
 ```
 
 Now let's try something more complex:
@@ -302,11 +317,19 @@ Now let's try something more complex:
 (@) Write a function that takes a string of text and counts the number of characters. The function should return "There are xx characters in that string." 
 ```{r}
 
+ch_function <- function(text) {
+  character_number <- nchar(text)
+  print(paste("There are ", character_number, " characters in that string.", sep = ""))
+  
+}
+ch_function("this is a sentence")
+
+
 ```
 
 (@) Reflect on the process of building the above function. How did you go about figuring this out? 
 
->
+> started with the print/paste function and worked backwards. In between those moments, I threw things against the wall. I went through like 16 computers. Put in for a reimbursement with college but they rejected me claiming that computers were not "mission criticial" to the DH program. 
 
 The body of a functions can use any of the techniques we've learned in this worksheet like loops and if statements. For example: 
 ```{r}
@@ -332,9 +355,11 @@ grade(75)
 (@) In the example below, why doesn't George Washington's grade get printed out? 
 ```{r}
 GeorgeWashington <- grade(60)
+GeorgeWashington
+
 ```
 
->
+> Because you'd have to the new variable, George Washington. 
 
 
 Here's a more complex example: 
@@ -358,10 +383,43 @@ gg.locations("San Diego", 1980)
 
 ```{r}
 
+gg.state <- function (d.state, d.year) {
+  data(gayguides)
+
+  for (i in 1:length(gayguides$state)) {
+    if (gayguides$state[i] == d.state && gayguides$Year[i] == d.year) {
+      print(paste("Found a location in ", gayguides$state[i], " called ", gayguides$title[i], ".", sep = ""))
+    } else {
+      next
+    }
+  }
+}
+
+gg.state("NY", 1984)
+
 ```
 
 (@) Use the Boston Women Voters dataset (BostonWomenVoters). Write a function that accepts the name of an occupation. Your function should return new dataframe that includes the records for every voter listed with that occupation.  
 ```{r}
+
+bb.occupation1 <- function (occupation) {
+  data(BostonWomenVoters)
+  bb.result <- data.frame()
+
+
+  for (i in 1:nrow(BostonWomenVoters)) {
+    if (BostonWomenVoters$Occupation[i] == occupation) {
+      bb.result <- rbind(bb.result, BostonWomenVoters[i, ])
+    } 
+  }
+
+  return(bb.result)
+}
+
+
+bb.occupation1("Housewife")
+
+
 
 ```
 
@@ -374,12 +432,40 @@ gg.locations("San Diego", 1980)
    - Counts how many locations are in that state
    - Returns a statement like "There are XX locations in [state]"
 ```{r}
+
+count_by_state <- function (state){
+state_count <- 0
+
+  for (i in 1:length(gayguides$state)){
+    if (gayguides$state[i] == state){
+      state_count <- state_count + 1
+    }
+  }
+   print(paste("There are ", state_count, "in the ", state))
+}
+count_by_state ("NY")
+
 ```
 
 (@) Can you modify your function to also accept a year as a second argument? So `count_by_state("SC", 1975)` would count locations in SC in 1975.
 ```{r}
+
+count_by_state <- function (state, year){
+state_count <- 0
+
+  for (i in 1:length(gayguides$state)){
+    if (gayguides$state[i] == state && gayguides$Year[i] == year){
+      state_count <- state_count + 1
+    }
+  }
+   print(paste("There are ", state_count, "in the ", state))
+}
+count_by_state ("NY", 1984)
+
+
+
 ```
 
 (@) Reflection: How do loops, conditionals, and functions work together? Give an example from this worksheet where you used all three.
 
->
+> They all equally work well at making me very, very angry. No, you write a function (a baby program) that holds loops and conditionals to quickly process your data and provide new outputs. 
