@@ -149,10 +149,17 @@ for(c in 1:length(spring26_courseload)) {
 
 (@) Now let's practice with data. Create a loop that prints out the first 5 titles from the gayguides dataset. Hint: You'll need to loop from 1 to 5 and access `gayguides$title[i]`
 ```{r}
-gg_first5 <- head(gayguides, n = 5)
-for(i in 1:length(gg_first5$title)) {
-  print(gg_first5$title[i])
+
+gg_count1 <- 0
+
+for(i in 1:nrow(gayguides)){
+  print(gayguides$title[i])
+    gg_count1 <- gg_count1 + 1 
+  if (gg_count1 > 5)
+  break
 }
+
+
 
 
 ```
