@@ -273,3 +273,36 @@ while (i < 6) {
 }
 
 
+library(tidyverse)
+
+library(DigitalMethodsData)
+data(gayguides)
+
+#select
+s.gayguides <- gayguides %>% select(title, Year)
+s.gayguides <- gayguides %>% select(-city, -state)
+s.gayguides <- gayguides %>% select(ID:state)
+
+#filter
+s.gayguides <- gayguides %>% filter(state == "SC") 
+s.gayguides <- gayguides %>% filter(Year >= 1970 & Year <= 1980)
+
+#mutate
+s.gayguides <- gayguides %>% mutate(location = paste(city, state, sep = ", "))
+
+#to get by decade
+s.gayguides <- gayguides %>% mutate(decade = floor(Year/10)*10)
+
+#arrange
+s.gayguides <- gayguides %>% arrange(Year)
+s.gayguides <- gayguides %>% arrange(state, Year)
+
+#groupby + summarize()
+s.gayguides <- gayguides %>% group_by(state, Year) %>% summarize(count =n()) %>% arrange(state)
+
+#in class practice
+rec_data <- read.csv("https://raw.githubusercontent.com/regan008/DigitalMethodsData/main/raw/Recreation-Expenditures.csv")
+
+sc_rec <- rec_data %>% filter(state == "SC")
+per_capit_sc <- rec_data %>% mutate(spending_per_capita = total_expenditures/population)
+cities_rec_population <- rec_data %>% filter(population > 50000 & total_expenditures > 25000)
