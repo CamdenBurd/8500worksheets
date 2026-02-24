@@ -113,6 +113,7 @@ statepopulations %>% mutate(difference = X1900 - X1800)
 
 (@) In the Boston Women Voters dataset, every voter is given an age. Can you use their age to calculate each person's birth year? (Assume all this data was collected in 1920.)
 ```{r}
+BostonWomenVoters %>% mutate(birth_year = 1920 - Age)
 
 ```
 
@@ -120,6 +121,7 @@ statepopulations %>% mutate(difference = X1900 - X1800)
 
 ```{r}
 
+gayguides %>% mutate(location = paste(city, state, sep = ", "))
 ```
 
 ### Working with Text: Introduction to `stringr`
@@ -142,15 +144,18 @@ gayguides %>%
 
 (@) Many city names in the gayguides data have inconsistent capitalization. Can you create a new column that standardizes all city names to title case using `str_to_title()`?
 ```{r}
+gayguides %>% mutate(city_capitalize = str_to_title(city))
+
 ```
 
 (@) The `amenityfeatures` column contains codes for different features of each location. These are abbreviations in parentheses like (D) for dancing, (E) for entertainment, (G) for girls/women, etc. Can you create a new column called `has_dancing` that is TRUE if the amenity features include "(D)"? (Hint: Use `grepl()` to search for "(D)" within the amenityfeatures column.
 ```{r}
-
+gg_dancing <- gayguides %>% mutate(has_dancing = grepl("(D)", amenityfeatures))
 ```
 
 (@) In the Boston Women Voters data, occupation names may have extra whitespace. Use `str_trim()` to clean the occupation column.
 ```{r}
+boston_clean_occupation <- BostonWomenVoters %>% mutate(clean_occupation = str_trim(Occupation))
 ```
 
 ### Arrange
@@ -169,7 +174,7 @@ gayguides %>%
 
 (@) Using the `statepopulation` data, which state has the largest population in 1850? Write code that pulls only the relevant columns (state and 1850) and sorts it accordingly. 
 ```{r}
-
+statepopulations %>% select(STATE, X1850) %>% arrange(desc(X1850)) 
 ```
 
 

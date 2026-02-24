@@ -273,7 +273,7 @@ while (i < 6) {
 }
 
 
-library(tidyverse)
+
 
 library(DigitalMethodsData)
 data(gayguides)
@@ -306,3 +306,4 @@ rec_data <- read.csv("https://raw.githubusercontent.com/regan008/DigitalMethodsD
 sc_rec <- rec_data %>% filter(state == "SC")
 per_capit_sc <- rec_data %>% mutate(spending_per_capita = total_expenditures/population)
 cities_rec_population <- rec_data %>% filter(population > 50000 & total_expenditures > 25000)
+
