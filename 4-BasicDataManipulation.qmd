@@ -214,7 +214,7 @@ BostonWomenVoters %>%
 (@) How many rows in the BostonWomenVoters dataset have missing ward information? 
 ```{r}
 
-sum(is.na(BostonWomenVoters))
+sum(is.na(BostonWomenVoters$Ward))
 ```
 
 (@) Why might ward information be missing for some voters? What does this tell us about the historical record?
