@@ -244,11 +244,15 @@ In R, **factors** are used to represent categorical data (like occupation, state
 class(gayguides$state)  # Usually character
 
 # Convert to factor
-gayguides %
+gayguides %>%
   mutate(state_factor = as.factor(state))
+
 
 # See the levels (categories)
 levels(gayguides$state_factor)
+
+levels(gg_state_factor$state_factor)
+
 ```
 
 Why use factors?
@@ -267,10 +271,17 @@ BostonWomenVoters %>%
 
 (@) Convert the `type` column in gayguides to a factor. How many different types of locations are there?
 ```{r}
+gg_typefactor<- gayguides %>% mutate(type_factor = as.factor(type))
+levels(gg_typefactor$type_factor)
+
 ```
 
 (@) In the Boston Women Voters data, convert Occupation to a factor. What are the levels?
 ```{r}
+boston_occupation_factor <- BostonWomenVoters %>% mutate(occupation_factor = as.factor(Occupation))
+
+levels(boston_occupation_factor$occupation_factor)
+
 ```
 
 **Note:** We'll learn more advanced factor manipulation (reordering, recoding, collapsing) in the next worksheet!
