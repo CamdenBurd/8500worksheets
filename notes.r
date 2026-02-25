@@ -307,3 +307,16 @@ sc_rec <- rec_data %>% filter(state == "SC")
 per_capit_sc <- rec_data %>% mutate(spending_per_capita = total_expenditures/population)
 cities_rec_population <- rec_data %>% filter(population > 50000 & total_expenditures > 25000)
 
+
+#function with argument
+h8500 <- function(numstudents){
+print(paste("Hello 8500, there are", numstudents, "students in this class"))
+}
+h8500(50)
+
+
+# Prompt: Function that takes as it argument a city. Then filters the gayguides dataset to show only those cities.
+func_city <- function(city_search){
+  gayguides %>% filter(city == city_search) %>% summarize(poop=n())
+}
+func_city("Greenville")
