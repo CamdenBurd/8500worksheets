@@ -320,3 +320,35 @@ func_city <- function(city_search){
   gayguides %>% filter(city == city_search) %>% summarize(poop=n())
 }
 func_city("Greenville")
+
+#four types of joins (left_join, right_join, inner_join, full_join).... left_join is the one you will likely use the most.  # nolint
+
+#forcats - using factors (categorical data, not just text-- they have levels and orders, rename messy categories for clarity,  # nolint
+  # Fct_lump() - keeps N categories, combines the rest as other.  # nolint
+  # Fct_reorder() - allows you to reorder by frequency (not alphabetically which is default) # nolint
+  # Fct_collapse() - which compbines related categories into groups
+  # Fct_record() - rename categories
+
+BostonWomenVoters %>% group_by(Occupation) %>% summarise(num_occ = unique(Occupation)) # nolint
+
+test <- BostonWomenVoters %>% mutate(occupation_lumped = fct_lump(Occupation, n=5)) %>% group_by(occupation_lumped) %>% summarise(count=n())
+
+domesticwork <- BostonWomenVoters %>% mutate(occupation_group = fct_collapse(Occupation, "Domestic Work" = c("Housewife", "At home", "Housekeeper")))
+
+
+farm.tenure.data <- read.csv("https://raw.githubusercontent.com/regan008/demo-data/refs/heads/main/farm-tenure-data.csv")
+farm.tenure.regions <- read.csv("https://raw.githubusercontent.com/regan008/demo-data/refs/heads/main/farm-tenure-regions.csv")
+
+
+farm_data2 <- farm.tenure.data %>% mutate(state_name = farm.tenure.data$STATE)
+
+farm_data_full <- left_join(farm_data2, farm.tenure.regions, by = "state_name")
+
+farm_regions <- farm_data_full %>% filter(YEAR == "1935") %>% group_by(region) %>% summarise(count = n())
+farm_regions_fake <- farm_data_full %>% group_by(region) %>% summarise(count = n())
+
+
+total_on_farm <- farm_data_full %>% mutate(total_farm = tenants/ full_owners + part_owners + managers + tenants)
+
+south_1925 <- total_on_farm %>% filter(region == "South") %>% filter(YEAR == "1925")
+south_1940 <- total_on_farm %>% filter(region == "South") %>% filter(YEAR == "1940")
