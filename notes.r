@@ -331,9 +331,12 @@ func_city("Greenville")
 
 BostonWomenVoters %>% group_by(Occupation) %>% summarise(num_occ = unique(Occupation)) # nolint
 
-test <- BostonWomenVoters %>% mutate(occupation_lumped = fct_lump(Occupation, n=5)) %>% group_by(occupation_lumped) %>% summarise(count=n())
+test <- BostonWomenVoters %>% mutate(occupation_lumped = fct_lump(Occupation, n=5)) %>% # nolint
+  group_by(occupation_lumped) %>%
+  summarise(count = n())
 
-domesticwork <- BostonWomenVoters %>% mutate(occupation_group = fct_collapse(Occupation, "Domestic Work" = c("Housewife", "At home", "Housekeeper")))
+domesticwork <- BostonWomenVoters %>%  # nolint
+mutate(occupation_group = fct_collapse(Occupation, "Domestic Work" = c("Housewife", "At home", "Housekeeper"))) # nolint
 
 
 farm.tenure.data <- read.csv("https://raw.githubusercontent.com/regan008/demo-data/refs/heads/main/farm-tenure-data.csv")
@@ -344,14 +347,14 @@ farm_data2 <- farm.tenure.data %>% mutate(state_name = farm.tenure.data$STATE)
 
 farm_data_full <- left_join(farm_data2, farm.tenure.regions, by = "state_name")
 
-farm_regions <- farm_data_full %>% filter(YEAR == "1935") %>% group_by(region) %>% summarise(count = n())
-farm_regions_fake <- farm_data_full %>% group_by(region) %>% summarise(count = n())
+farm_regions <- farm_data_full %>% filter(YEAR == "1935") %>% group_by(region) %>% summarise(count = n()) # nolint
+farm_regions_fake <- farm_data_full %>% group_by(region) %>% summarise(count = n()) # nolint # nolint
 
 
-total_on_farm <- farm_data_full %>% mutate(total_farm = tenants/(full_owners + part_owners + managers + tenants)*100)
+total_on_farm <- farm_data_full %>% mutate(total_farm = tenants/(full_owners + part_owners + managers + tenants)*100) # nolint
 
-south_1925 <- total_on_farm %>% filter(region == "South") %>% filter(YEAR == "1925")
-south_1940 <- total_on_farm %>% filter(region == "South") %>% filter(YEAR == "1940")
+south_1925 <- total_on_farm %>% filter(region == "South") %>% filter(YEAR == "1925") # nolint
+south_1940 <- total_on_farm %>% filter(region == "South") %>% filter(YEAR == "1940") # nolint
 
 mean_1925 <- mean(south_1925$total_farm)
 mean_1940 <- mean(south_1940$total_farm, na.rm = TRUE)
