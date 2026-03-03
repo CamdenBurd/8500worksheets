@@ -244,11 +244,11 @@ levels(BostonWomenVoters$Occupation)
 
 (@) How many different occupations are there?
 
->
+> 1137
 
 (@) Look at the levels. Do you notice any that could be combined or standardized? List a few examples.
 
->
+> several versions of housekeepers. variations of widows. 
 
 ### `fct_count()` - Counting Factor Levels
 
@@ -262,7 +262,7 @@ BostonWomenVoters %>%
 
 (@) What are the three most common occupations?
 
->
+>"Housewife" & "At home" & "Housekeeper"
 
 ### `fct_lump()` - Combining Small Categories
 
@@ -278,6 +278,12 @@ This kept the 5 most common occupations and combined everything else into "Other
 
 (@) Use `fct_lump()` to keep the top 10 occupations. How many voters are in the "Other" category?
 ```{r}
+BostonWomenVoters %>%
+  mutate(occupation_lumped = fct_lump(Occupation, n =10)) %>%
+  count(occupation_lumped) %>%
+  arrange(desc(n))
+
+# 4759 in other. 
 ```
 
 ### `fct_reorder()` - Reordering by Another Variable
@@ -299,12 +305,14 @@ BostonWomenVoters %>%
   summarize(avg_age = mean(Age, na.rm = TRUE),
             count = n()) %>%
   filter(count > 20) %>%  # Only occupations with at least 20 people
-  mutate(Occupation = fct_reorder(Occupation, avg_age))
+  mutate(Occupation = fct_reorder(Occupation, avg_age)) 
+
+
 ```
 
 (@) Which occupations have the youngest average age? Which have the oldest? What might this tell us historically?
 
->
+> of those collected, cashier is the lowest age. 
 
 ### `fct_recode()` - Renaming Factor Levels
 
@@ -324,6 +332,22 @@ BWV.occupations <- BostonWomenVoters %>%
 
 (@) Look at the occupation levels. Find at least 3 more occupations that could be recoded to be more standardized or descriptive. Create a new column with your recoded occupations.
 ```{r}
+# several variations of housewife
+BWV.occupations_1 <- BostonWomenVoters %>%
+    mutate(
+      Occupation_clean_more = fct_recode(Occupation,
+        "Housewife" = "housewife",
+        "Housewife" = "Married, Housewife",
+        "Housewife" = "Housewife ",
+        "Housewife" = "Married",
+        "Housewife" = "housewife, married",
+        "Housewife" = "house-wife",
+        "Housewife" = "House-wife"
+      )
+    ) %>%
+    count(Occupation_clean_more) %>%
+    arrange(desc(n))
+
 ```
 
 ### `fct_collapse()` - Combining Multiple Levels into Categories
