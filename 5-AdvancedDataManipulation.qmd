@@ -456,6 +456,11 @@ These all create "Date" objects that R knows how to work with.
 
 (@) Create a vector of dates in different formats and parse them using the appropriate lubridate functions.
 ```{r}
+
+
+mdy("04/12/1985")
+dmy("27-03-1986")
+
 ```
 
 ### Creating Date Columns
@@ -473,6 +478,12 @@ events %>%
 
 (@) The `gayguides` data has a Year column but no full dates. Create a date column assuming all entries are from January 1st of that year. (Hint: use `paste()` to create a string like "1970-01-01", then parse it)
 ```{r}
+gayguides_date <- gayguides %>%
+  mutate(full_date = paste("12", "1", gayguides$Year, sep = "-"))
+
+gayguides_date_1 <- gayguides_date %>%
+  mutate(new_date = mdy(full_date))
+
 ```
 
 ### Extracting Components from Dates
@@ -490,6 +501,9 @@ wday(dates, label = TRUE)   # Get day of week
 
 (@) Using the dates you created above for `gayguides`, extract the decade from the date. Compare it to using `floor(Year / 10) * 10` directly on the Year column. Do you get the same result?
 ```{r}
+
+gg_decades <- paste(floor(year(gayguides_date_1$new_date)/10)*10)
+
 ```
 
 ### Date Arithmetic
@@ -510,6 +524,12 @@ start_date + months(6)   # 6 months later
 
 (@) The Boston Women Voters data was collected in 1920. Each person has an age. Calculate each person's approximate birth year using `1920 - Age`. Then create a proper birth date assuming they were born on July 1st of that year.
 ```{r}
+
+BWV_birthyear <- BostonWomenVoters %>%
+  mutate (birth_date = (paste("7", "1", (1920 - BostonWomenVoters$Age), sep = "-"))) %>%
+  mutate(real_birthday = mdy(BWV_birthyear$birth_date))
+  
+
 ```
 
 ### Working with Intervals
@@ -528,6 +548,22 @@ ymd("1935-06-15") %within% prohibition  # FALSE
 
 (@) Create intervals for different decades (1960s, 1970s, 1980s). For each entry in `gayguides`, determine which decade interval it falls into.
 ```{r}
+
+dec_1960s <- interval(ymd("1960-01-01"), ymd("1969-12-31"))
+dec_1970s <- interval(ymd("1970-01-01"), ymd("1979-12-31"))
+dec_1980s <- interval(ymd("1980-01-01"), ymd("1989-12-31"))
+
+for(i in 1:length(gayguides_date_1$new_date))
+  if(gayguides_date_1$new_date[i] %within% dec_1960s){
+  print("This is the 1960s")
+} else if (gayguides_date_1$new_date[i] %within% dec_1970s) {
+   print("This is the 1970s")
+} else if (gayguides_date_1$new_date[i] %within% dec_1980s) {
+   print("This is the 1980s")
+}
+
+
+
 ```
 
 ### Handling Historical Dates
@@ -545,11 +581,18 @@ year_month <- ymd(paste0("1920-06", "-01"))
 
 (@) Some historical records might only have a year. Create a function that takes a year and returns a date object for January 1st of that year. Test it with several years.
 ```{r}
+
+make_a_date <- function(any_year){
+  ymd(paste0(any_year, "-01-01"))
+}
+make_a_date(2019)
+
+
 ```
 
 (@) Reflect: What challenges might you encounter when working with dates in historical sources? How might `lubridate` help address some of these challenges?
 
->
+> Many dates are only by years. Or other dates will be inconsistent with other forms of data. Not all sources may have consistent naming mechanisms or accurate record keeping. Lubridate can create some seamless options if you have a better sense of months or even years. 
 
 ## Putting it all together
 Each of the functions covered in this worksheet and in last week's worksheet are valuable tools for manipulating datasets. But they are more powerful when combined. When using them to pair down a dataset, we are asking and answering a question. For example in this code from earlier in our worksheet:
