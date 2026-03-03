@@ -204,17 +204,17 @@ print("Hello 8500")
 h8500()
 
 #function with argument
-h8500 <- function(numstudents){
-print(paste("Hello 8500, there are", numstudents, "students in this class"))
+h8500 <- function(numstudents) {
+  print(paste("Hello 8500, there are", numstudents, "students in this class"))
 }
 h8500(50)
 
 
 
-#don't forget to make a COUNT! (as seen in my issue with problem at line 218)!!!!!!!
+#don't forget to make a COUNT! (as seen in my issue with problem at line 218)!!!!!!! # nolint
 
-#in relation to Emma's post on Slack 
-bwv.occupation <- function (Occupation) {
+#in relation to Emma's post on Slack
+bwv.occupation <- function (Occupation) { # nolint # nolint
   data(BostonWomenVoters)
 
   for (i in 1:nrow(BostonWomenVoters)) {
