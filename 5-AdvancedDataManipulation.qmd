@@ -412,9 +412,24 @@ Now when you use this factor in a plot or table, it will appear in this conceptu
 
 (@) Create occupation categories and relevel them in an order that makes sense historically. Explain why you chose this order.
 ```{r}
+
+class_status <- BostonWomenVoters %>%
+  mutate(
+    occupation_historical = fct_collapse(Occupation,
+  "Working Class" = c("Factory Worker", "Factory Work", "Factory", "factory hand"),
+  "Professional Managerial Class" = c("Editor", "Teacher", "teacher", "Teacher ", "Teacher  "),
+  "Elite" = c("Housewife", "housewife")
+  ),
+  occupation_historical = fct_relevel(occupation_historical, "Elite", "Professional Managerial Class", "Working Class") 
+  
+  ) %>%
+  pull(occupation_historical) %>%
+  levels()
+
+
 ```
 
-> Explanation:
+> Explanation: Ehh, I tried to pull a few careers based on class status. 
 
 
 ## Working with Dates using `lubridate`
