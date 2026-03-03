@@ -371,9 +371,23 @@ Note that this dataset is still really long. We'd have to add all the categories
 
 (@) Create your own categorization scheme for occupations. Combine related occupations into 5-7 broader categories that make historical sense. Consider categories like professional, domestic, skilled labor, etc. Explain your reasoning.
 ```{r}
+test_2 <- BostonWomenVoters %>%
+  mutate(occupation_categories = fct_collapse(Occupation,
+  "Domestic" = c("Housewife", "Housekeeper", "At Home", "Housework", "housewife", "Housewife", "At home"),
+  "Medical" = c("Nurse", "nurse", "Physician"),
+  "Education" = c("Teacher", "School teacher", "Student"),
+  "Textiles" = c("dressmaker", "Tailoress", "Laundress")
+  )
+  ) %>% 
+  count(occupation_categories) %>%
+  arrange(desc(n))
+
+
+
 ```
 
 > Explain your reasoning. 
+# Ehh, I just started group shit based on profession. 
 
 ### `fct_relevel()` - Manual Reordering
 
