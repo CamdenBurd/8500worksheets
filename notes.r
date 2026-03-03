@@ -348,7 +348,11 @@ farm_regions <- farm_data_full %>% filter(YEAR == "1935") %>% group_by(region) %
 farm_regions_fake <- farm_data_full %>% group_by(region) %>% summarise(count = n())
 
 
-total_on_farm <- farm_data_full %>% mutate(total_farm = tenants/ full_owners + part_owners + managers + tenants)
+total_on_farm <- farm_data_full %>% mutate(total_farm = tenants/(full_owners + part_owners + managers + tenants)*100)
 
 south_1925 <- total_on_farm %>% filter(region == "South") %>% filter(YEAR == "1925")
 south_1940 <- total_on_farm %>% filter(region == "South") %>% filter(YEAR == "1940")
+
+mean_1925 <- mean(south_1925$total_farm)
+mean_1940 <- mean(south_1940$total_farm, na.rm = TRUE)
+
