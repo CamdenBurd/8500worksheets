@@ -359,3 +359,4 @@ south_1940 <- total_on_farm %>% filter(region == "South") %>% filter(YEAR == "19
 mean_1925 <- mean(south_1925$total_farm)
 mean_1940 <- mean(south_1940$total_farm, na.rm = TRUE)
 
+data(judges)

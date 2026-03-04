@@ -177,7 +177,7 @@ head(sc.parks)
 ```
 This dataset contains all of the localities in South Carolina along with information about the types of recreational workers in that city (paid vs unpaid, male vs female). However, the problem with this dataset is that every year is a column heading making it difficult to work with. On the surface this seems like a useful format, partially because it reads left to right which is how we're accustomed to reading documents. Its easy to compare, for example, the number of female paid recreation workers between 1930 and 1945. But for computational purposes this format is less than ideal for many types of visualizations and operations. R provides functions for dealing with this. `pivot_longer()` "lengthens" your data by increasing the number of rows and decreasing the number of columns. 
 ```{r}
-sc.parks <- sc.parks %>%
+sc.parks1 <- sc.parks %>%
   pivot_longer(!city:type_of_worker, names_to = "year", values_to = "count")
 ```
 
@@ -195,13 +195,13 @@ rec.spaces_transformed <- rec.spaces %>%
 
 The opposite of `pivot_longer()` is `pivot_wider()`. It "widens" data by increasing the number of columns and decreasing the number of rows. We can revert `sc.parks` back to a wide dataset using this function.
 ```{r}
-sc.parks %>%
+rec.spaces_transformed %>%
   pivot_wider(names_from = year, values_from = count)
 ```
 
 (@) Widen the `sc.parks` dataset so that the column names are drawn from the type of recreation worker.
 ```{r}
-sc.parks_job <- sc.parks %>% pivot_wider(names_from = type_of_worker, values_from = count)
+sc.parks_job <- sc.parks1 %>% pivot_wider(names_from = type_of_worker, values_from = count)
 ```
 
 (@) Turn `rec.spaces` into a wide dataframe. 
@@ -606,27 +606,45 @@ The implicit question was, "How many locations appear in each year?". The `judge
 
 (@) First, tell me, what is the question you are asking? 
 ```{r}
+Looking at the total number of colleges where judges hailed from, is there preference among political parties? 
+
 
 ```
 
 (@) Now write some code to address that question. Comment the code with notes that explain your thinking as you go. Use functions like select(), filter(), etc to pair down your dataset and reshape it to address your question. 
 ```{r}
+#Is there any preference about the party that selects the judges from schools? 
+
+judges %>%
+  select(Party.of.Appointing.President..1.,School..1.) %>%
+  group_by(Party.of.Appointing.President..1., School..1.) %>%
+  summarise(count = n()) %>%
+  arrange(desc(count))
+
 
 ```
 
 (@) Now ask a question of the `gayguides` data (or another dataset of your choice). What is the question you are asking? 
 ```{r}
-
+Is there a preference for type of locale in relation to year? 
 ```
 
 (@) Now write some code to address that question. Comment the code with notes that explain your thinking as you go. Use functions like select(), filter(), etc to pair down your dataset and reshape it to address your question. 
 ```{r}
-
+gayguides %>%
+  select(type, Year) %>%
+  group_by(type, Year) %>%
+  summarise(count =n()) %>%
+  arrange(desc(count))
 ```
 
 (@) Write a function that filters the gay guides dataset. It should accept 2 arguments: year and state. When passed to the function the function should return only the title, type, state and year for each entry. 
 ```{r}
 
+gg_cleanedup <- function(year, state){
+  gayguides %>%
+  select()
+}
 ```
 
 (@) Lets try another, using the BostonWomenVoters data, answer this question: "How did the age distribution of women in different occupational categories vary across wards?"
