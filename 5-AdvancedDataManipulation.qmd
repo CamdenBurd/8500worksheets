@@ -641,10 +641,16 @@ gayguides %>%
 (@) Write a function that filters the gay guides dataset. It should accept 2 arguments: year and state. When passed to the function the function should return only the title, type, state and year for each entry. 
 ```{r}
 
-gg_cleanedup <- function(year, state){
-  gayguides %>%
-  select()
+gg_cleanedup <- function(year, state) {
+  for (i in 1:nrow(gayguides)){
+  if (gayguides$Year[i] == year & gayguides$state[i] == state) {
+    print(paste(gayguides$title[i], gayguides$type[i], gayguides$state[i], gayguides$Year[i], sep = ", "))}
+  }
 }
+
+gg_cleanedup(1985, "NY")
+
+
 ```
 
 (@) Lets try another, using the BostonWomenVoters data, answer this question: "How did the age distribution of women in different occupational categories vary across wards?"
@@ -656,10 +662,26 @@ Your analysis should:
 - Calculate average age, minimum age, and maximum age for each group
 - Arrange the results in a meaningful way
 ```{r}
+
+newbwv <- BostonWomenVoters %>% 
+  drop_na(Ward, Age) %>%
+  mutate(occupation_groups = fct_collapse(Occupation, 
+  "Education" = c("Teacher", "School teacher", "Stenographer"),
+  "Retail" = c("clerk", "Clerk", "Saleslady", "Book keeper", "Book-keeper", "Bank clerk"),
+  "Domestics" = c("Housewife", "at home", "At home"),
+  "Textiles" = c("Drapery sewer", "Weaver"),)) %>%
+  group_by(Ward, occupation_groups) %>%
+  mutate(Age, average_age = mean(Age)) %>%
+  mutate(Age, min_age = min(Age)) %>%
+  mutate(Age, max_age = max(Age)) %>%
+  select(Ward, occupation_groups, average_age, min_age, max_age) %>% 
+  arrange(Ward)
+
+
 ```
 
 (@) What did you discover? Write 2-3 sentences about what this tells us about Boston women voters.
 
->
+> I am not sure to be honest, ha. Workers I grouped in retail schew younger than those I categorized as Domestic. Which makes sense as many of those contined housewifes. 
 
 
