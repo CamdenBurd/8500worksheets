@@ -366,3 +366,8 @@ data(judges)
 library(tidyverse)
 library(lubridate)
 library(DigitalMethodsData)
+
+
+### Class on March 30, 2026
+## components of a graph: Themes, coordinates, themes, facets, geometics, aesthetics, data 
+
