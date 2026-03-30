@@ -371,3 +371,42 @@ library(DigitalMethodsData)
 ### Class on March 30, 2026
 ## components of a graph: Themes, coordinates, themes, facets, geometics, aesthetics, data 
 
+## ggplot(data = , <DATA>, mapping = aes (<MAPPINGS>)) + <GEOM_FUNCTION>())
+
+library(tidyverse)
+library(DigitalMethodsData)
+library(ggplot2)
+data(gayguides)
+
+ggplot(data = gayguides, mapping = aes(x = Year)) + geom_histogram(bins = 10, fill="steelblue", color="white")
+
+gg_yearly <- gayguides %>% group_by(Year) %>% summarise(count = n())
+ggplot(data = gg_yearly, map = aes(x = Year, y = count)) + geom_point()
+ggplot(data = gg_yearly, map = aes(x = Year, y = count)) + geom_line()
+ggplot(data = gg_yearly, map = aes(x = Year, y = count)) + geom_line() + geom_point()
+
+top_states <- gayguides %>% count(state, sort = TRUE) %>% head(3) %>% pull(state)
+gg_states <- gayguides %>% filter(state %in% top_states) %>% group_by(Year, state) %>% summarise(count=n())
+
+ggplot(data = gg_states, mapping = aes(x = Year, y = count, color = state)) + geom_line()
+
+ggplot(data = gg_states, mapping = aes(x = Year, y = count, color = state)) + geom_line() + geom_point()
+
+ggplot(data = gg_states, mapping = aes(x = Year, y = count)) + geom_line() + facet_wrap(~state)
+
+ggplot(data = gg_states, mapping = aes(x = Year, y = count)) + geom_line() + facet_grid(state ~ .)
+
+gg_1980 <- gayguides %>% filter(Year == 1980) %>% separate_rows(type, sep = ", ") %>% count(type, sort = TRUE) %>% head(10)
+ggplot(data = gg_1980, mapping = aes(x = type, y = n)) + geom_col()
+ggplot(data = gg_1980, mapping = aes(x = type, y = n)) + geom_col() + coord_flip()
+ggplot(data = gg_1980, mapping = aes(x = reorder(type, n), y = n)) + geom_col() + coord_flip()
+
+gg_compare <- gayguides %>% filter(state %in% c("CA", "NY", Year >= 1970)) %>% separate_rows(type, sep = ", ") %>% group_by(state, type) %>% summarise(count=n(), .groups = "drop") %>% group_by(state) %>% slice_max(count, n = 5) %>% ungroup()
+
+ggplot(data = gg_compare, mapping = aes(x = type, y = count, fill=state)) + geom_col()
+ggplot(data = gg_compare, mapping = aes(x = type, y = count, fill=state)) + geom_col(position = "dodge")
+ggplot(data = gg_compare, mapping = aes(x = type, y = count, fill=state)) + geom_col(position = "fill")
+
+ggplot(data = gg_compare, mapping = aes(x = type, y = count, fill=state)) + geom_col(position = "dodge") + labs(title="Top 5 Types of Locations in CA and NY", x = "Number of Locations", y = "Type of Location", caption = "Source: Mapping the Gay Guides")
+ggplot(data = gg_compare, mapping = aes(x = type, y = count, fill=state)) + geom_col(position = "dodge") + labs(title="Top 5 Types of Locations in CA and NY", x = "Number of Locations", y = "Type of Location", caption = "Source: Mapping the Gay Guides") + theme(plot.title = element_text(size = 16, face = "bold"))
+
