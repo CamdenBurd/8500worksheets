@@ -127,19 +127,31 @@ ggplot(sc.rec, aes(x = state, y = state.expenditures )) +
 (@) Using the `gayguides` data, create a bar chart that shows the number of locations in 1980 in South Carolina, Georgia, and North Carolina. 
 ```{r}
 
+gg_se_states <- gayguides %>% group_by(state, Year) %>% filter(Year == 1980) %>% summarise(count = n()) %>% filter(state %in% c("SC", "GA", "NC")) 
+
+
+ggplot(gg_se_states, aes(x = state, y = count)) + geom_col()
 ```
 
 (@) Using the `gayguides` data, plot the number of religious institutions in each state.
 ```{r}
+unique_type <- unique(gayguides$type)
+
+gg_religion <- gayguides %>% filter(type == "Religious Institution") %>% group_by(state) %>% summarise(count = n())
+
+ggplot(gg_religion, aes(x = state, y = count)) + geom_col()
 
 ```
 
 (@) Formulate a question based on a dataset of your choice. That question should be something that would be appropriately answered by a bar chart. What is the question you want to explore?
 
-<
+< Well, I I've been waiting to use my own data for a question about parks and types of parks introduced into the federal system over time. 
 
 (@) Now write the code to answer that question and use comments (`#`) to explain your thinking as you go.
 ```{r}
+
+ggplot(park_category, aes(x = decade, y = count, color = designation)) + geom_col()
+
 
 ```
 
