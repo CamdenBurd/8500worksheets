@@ -168,6 +168,9 @@ ggplot(gg.byyear, aes(x = Year, y = count)) +
 
 (@) Create a line chart that shows the number of religious institutions in the gay guides data over time.
 ```{r}
+gg_religion <- gayguides %>% filter(type == "Religious Institution") %>% group_by(Year) %>% summarise(count = n())
+
+ggplot(gg_religion, aes(x = Year, y = count)) + geom_line()
 
 ```
 
