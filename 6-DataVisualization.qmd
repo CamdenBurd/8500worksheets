@@ -220,6 +220,9 @@ rec_worker_data <- rec_worker_pivot %>% select(type_of_worker, year, count) %>% 
 ggplot(rec_worker_data, aes(x = year, y = count)) + geom_col() + facet_wrap(~type_of_worker)
 
 
+#### use fact_collapse to make the new factors for volunteer and nonvulunterr labor
+##### need to make the year a number column by removing the x in the columbe. use mutate using gsub 
+
 ```
 
 ### Practice
