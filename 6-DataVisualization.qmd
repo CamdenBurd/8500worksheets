@@ -194,17 +194,30 @@ ggplot(gg.byyear, aes(x = Year, y = count)) +
 
 (@) Using the state recreation data, can you create a chart that outlines the total expenditures in South Carolina by city?
 ```{r}
+rec_city_exp <- recreational.data %>% select(city, total_expenditures)
 
+ggplot(recreational.data, aes(x = city, y = total_expenditures)) + geom_col() + facet_wrap(~city)
 ```
 
 (@) Using the gayguides data can you select 5 types of locations and chart the number of each type between 1965 and 1980? 
 ```{r}
+
+gg_types <- gayguides %>% filter(type == "Cruising Area"| type == "Book Store" | type == "Restaurant" | type == "Bars/Clubs" | type == "Theatre") %>% filter(Year >= 1965 | Year <= 1980) %>% group_by(type, Year) %>% summarise(count = n())
+
+ggplot(gg_types, aes(x = Year, y = count)) + geom_line() + facet_wrap(~type)
+
 
 ```
 
 (@) Using this recreation dataset from last week, can you find the average number of volunteer and paid workers over time? 
 ```{r}
 rec.workers <- read.csv("https://raw.githubusercontent.com/regan008/DigitalMethodsData/main/raw/RecreationData-Wide.csv")
+
+rec_worker_pivot <- rec.workers %>% pivot_longer(!city:type_of_worker, names_to = "year", values_to = "count")
+
+rec_worker_data <- rec_worker_pivot %>% select(type_of_worker, year, count) %>% group_by(type_of_worker, year, count) %>% summarise(mean = mean(count))
+
+ggplot(rec_worker_data, aes(x = year, y = count)) + geom_col() + facet_wrap(~type_of_worker)
 
 
 ```

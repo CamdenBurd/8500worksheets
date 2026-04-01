@@ -410,8 +410,10 @@ ggplot(data = gg_compare, mapping = aes(x = type, y = count, fill=state)) + geom
 ggplot(data = gg_compare, mapping = aes(x = type, y = count, fill=state)) + geom_col(position = "dodge") + labs(title="Top 5 Types of Locations in CA and NY", x = "Number of Locations", y = "Type of Location", caption = "Source: Mapping the Gay Guides")
 ggplot(data = gg_compare, mapping = aes(x = type, y = count, fill=state)) + geom_col(position = "dodge") + labs(title="Top 5 Types of Locations in CA and NY", x = "Number of Locations", y = "Type of Location", caption = "Source: Mapping the Gay Guides") + theme(plot.title = element_text(size = 16, face = "bold"))
 
-
+library(DigitalMethodsData)
 data(BostonWomenVoters)
 data(gayguides)
 library(ggplot2)
 library(tidyverse)
+library(dplyr)
+
