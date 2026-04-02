@@ -215,9 +215,10 @@ rec.workers <- read.csv("https://raw.githubusercontent.com/regan008/DigitalMetho
 
 rec_worker_pivot <- rec.workers %>% pivot_longer(!city:type_of_worker, names_to = "year", values_to = "count")
 
-rec_worker_data <- rec_worker_pivot %>% select(type_of_worker, year, count) %>% group_by(type_of_worker, year, count) %>% summarise(mean = mean(count))
+rec_worker_data <- rec_worker_pivot %>% mutate(worker = fct_collapse(type_of_worker, "paid" = c("male paid", "female paid"), "volunteer" = c("men volunteer", "women volunteer"))) %>% select(worker, year, count) %>% group_by(worker, year) %>% summarise(count = mean(count, na.rm = TRUE)) %>% mutate(year = str_remove(year, "^X")) %>% mutate(year = as.numeric(year))
 
-ggplot(rec_worker_data, aes(x = year, y = count)) + geom_col() + facet_wrap(~type_of_worker) ty 
+
+ggplot(rec_worker_data, aes(x = year, y = count)) + geom_line() + facet_wrap(~worker) 
 
 
 #### use fact_collapse to make the new factors for volunteer and nonvulunterr labor
