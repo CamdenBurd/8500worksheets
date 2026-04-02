@@ -232,22 +232,33 @@ In the slots below use the datasets for class (or a dataset of your choice) to c
 (@) Plot 1
 ```{r}
 
+gg_mountainwest_time <- gayguides %>% select(state, Year) %>% filter(state %in% c("UT", "NV", "CO", "AZ", "MT")) %>% group_by(state, Year) %>% summarise(count = n())
+
+ggplot(gg_mountainwest_time, aes(x = Year, y = count, color = state)) + geom_line()
+
 ```
 
 (@) Plot 1 explanation: 
->
+> I wanted to see the number of locations in Mountain West states over time. 
 
 (@) Plot 2
 ```{r}
 
+gg_midwest <- gayguides %>% select(state, Year) %>% filter(state %in% c("MI", "IN", "IL", "OH", "WI", "MN", "IA", "NE")) %>% group_by(state, Year) %>% summarise(count = n())
+
+ggplot(gg_midwest, aes(x = Year, y = count, color = state)) + geom_line()
+
+
 ```
 
 (@) Plot 2 explanation: 
->
+> Same as the first, but for the Midwest. 
 
 (@) Plot 3. For this one, try a different kind of plot. [Check out a useful gallery here.](https://github.com/regan008/DigitalMethodsData/blob/main/raw/RecreationData-Wide.csv)
 (For this week, avoid choosing a map. We'll talk more about maps and geographic data over the next two weeks.)
 ```{r}
+
+
 
 ```
 
