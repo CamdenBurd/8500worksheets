@@ -217,7 +217,7 @@ rec_worker_pivot <- rec.workers %>% pivot_longer(!city:type_of_worker, names_to 
 
 rec_worker_data <- rec_worker_pivot %>% select(type_of_worker, year, count) %>% group_by(type_of_worker, year, count) %>% summarise(mean = mean(count))
 
-ggplot(rec_worker_data, aes(x = year, y = count)) + geom_col() + facet_wrap(~type_of_worker)
+ggplot(rec_worker_data, aes(x = year, y = count)) + geom_col() + facet_wrap(~type_of_worker) ty 
 
 
 #### use fact_collapse to make the new factors for volunteer and nonvulunterr labor
