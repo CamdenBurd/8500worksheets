@@ -417,3 +417,105 @@ library(ggplot2)
 library(tidyverse)
 library(dplyr)
 
+## class on April 6, 2026
+#Basic concepts
+  ##algorithsm cannot work directly with raw text
+  ## For text analysis the text must be converted into numbers--specifically vectors of numbers. 
+  ## The vectors are derived from textual data in order to reflect various linguistic properties. 
+
+  ## tokenization - the process of breaking down text into smaller units called tokens which can be words, phrases, or individual characters
+  ## bag of word model - representation of text that describes the occurence of words within a document, takes a text and extracts each work and count instances of that word, only concerned with frequency of words. 
+
+  ## document-term matrix - is a mathematical matrix that represents the freuquency of terms in a collection of documents. rows correspond to documents in the collection. collumns correspond to terms. each cell refers to frequency 
+
+  ## TF-IDF -- term frequency, inverse document frequency. TF is how odten a word appears in a document. IDF is how rare or common a word is across entire corpus or collection od documents. TF-IDF helps, identify relevant and distinct terms in a document by giving more weight to words that are importnat to a specifc document not common across all documents. 
+
+
+library(tidyverse)
+library(tidytext)
+
+tiny_corpus <- data.frame(
+  doc_id = c("FDR_1933", "Lincoln_1863"),
+  text = c(
+    "We have nothing to fear but fear itself",
+    "We have government of the people by the people for the people"
+  )
+)
+
+tiny_corpus
+tiny_corpus %>%
+  unnest_tokens(word, text)
+
+
+tiny_corpus %>%
+    unnest_tokens(word, text) %>%
+    count(doc_id, word, sort = TRUE)
+
+
+tiny_corpus %>%
+  unnest_tokens(word, text) %>%
+  count(doc_id, word) %>%
+  pivot_wider(names_from = word, values_from = n, values_fill = 0)
+
+## stop words - words that are filler, less historically interesting
+
+tiny_corpus %>%
+    unnest_tokens(word, text) %>%
+    count(doc_id, word, sort = TRUE)
+
+    tiny_corpus %>%
+    unnest_tokens(word, text) %>%
+    anti_join(stop_words) %>%
+    count(doc_id, word, sort = TRUE)
+
+### caluclate TF-IDF
+  
+  tiny_corpus %>%
+    unnest_tokens(word, text) %>%
+    anti_join(stop_words) %>%
+    count(doc_id, word, sort = TRUE) %>%
+    bind_tf_idf(word, doc_id, n) %>%
+    arrange(desc(tf_idf))
+
+library(tidyverse)
+library(tidytext)
+library(readtext)
+
+# Download and load the data
+download.file("https://github.com/regan008/8510-TextAnalysisData/raw/refs/heads/main/InfoBulletin.zip", "InfoBulletin.zip")
+unzip("InfoBulletin.zip")
+
+metadata <- read.csv("https://raw.githubusercontent.com/regan008/8510-TextAnalysisData/refs/heads/main/ib-metadata.csv")
+bulletins <- readtext(paste(getwd(), "/InfoBulletin/*.txt", sep=""))
+
+# Join them together
+ib <- bulletins %>%
+  left_join(metadata, by = c("doc_id" = "filename"))
+
+# STEP 1: Tokenize and remove stopwords
+ib_words <- ib %>%
+  unnest_tokens(word, text) %>%
+  anti_join(stop_words)
+
+  # STEP 2: Create a list of food-related terms and filter for them
+food_terms <- c("food", "agriculture", "crops", "wheat", "grain", "rations", 
+                "hunger", "harvest", "livestock", "feed", "shortage", "famine")
+
+food_words <- ib_words %>%
+  filter(word %in% food_terms)
+
+  # STEP 3: Visualize food vocabulary over time
+food_words %>%
+  count(year, word) %>%
+  ggplot(aes(x = year, y = n, fill = word)) +
+  geom_col() +
+  labs(title = "Food Terms in Information Bulletins, 1949-1952")
+
+
+# STEP 4: Find what words appear near food terms (bigrams)
+ib %>%
+  unnest_tokens(bigram, text, token = "ngrams", n = 2) %>%
+  separate(bigram, into = c("word1", "word2"), sep = " ") %>%
+  filter(word1 %in% food_terms | word2 %in% food_terms) %>%
+  count(word1, word2, sort = TRUE) %>%
+  head(15)
