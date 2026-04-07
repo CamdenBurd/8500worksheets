@@ -185,6 +185,7 @@ While stemming can be useful for some applications, it's often problematic for h
 Lets reset our work space and ensure that our df is loaded with single tokenized words and filter by our stopword list. Go ahead and clear your environment by running `rm(list=ls())` in the console. Then run the below code. This code is simply everything we've run up to this point. 
 
 ```{r}
+
 meta <- as.data.frame(sotu_meta)
 file_paths <- sotu_dir(dir = "sotu_files")
 sotu_texts <- readtext(file_paths)
@@ -200,7 +201,7 @@ tidy_sotu <- sotu_whole %>%
 ```
 (@) Before we move forward, take a minute a describe the chunk of code you just ran. What does each section do and how does it reflect the workflow for a topic modeling project? What are the important steps that are unique to topic modeling? 
 
->
+> We are taking the loaded meta data and creatign a dataframe from it "meta". We then are creating a directory to house the sotu files and the file paths for those files. Readtext then pulls text from the file paths variable. The new data is organized by document id and the text. You then take the metadata, arrange by president, then bind colums (though I am not sure by what?) TidySotu is might by tokening the text of the speeches, by wods, then removing the stopwords. 
 
 
 The most basic kind of analysis we might be interested in doing is counting words. We can do that easily using the `count()` function: 
@@ -239,11 +240,17 @@ sotu.length <- tidy_sotu %>%
 
 (@) Think back to the metadata that we loaded about these speeches. Why are the STOU addresses for more modern president's shorter than others? (For example Bush vs Teddy Roosevelt.) What about the presidency, and the State of the Union tradition, changed that would account for this? 
 
->
+> The STOU used to be a written document, submitted to Congress. Whereas, in the modern age, the STOU is a speech.  
 
 (@) Filter the dataset to address this discrepancy and the recreate these statistics: 
 ```{r}
 
+sotu.speech.text <- tidy_sotu %>%
+  count(president, doc_id, sotu_type)  %>% 
+  group_by(sotu_type) %>% 
+  summarize(avg_words = mean(n)) %>% 
+  arrange(desc(avg_words))
+## not sure if this is what you are looking for, but we now have an average of length based on written vs spoken STOU. 
 ```
 
 ### Term Frequency
