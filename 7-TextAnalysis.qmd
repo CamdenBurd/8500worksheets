@@ -33,6 +33,8 @@ library(SnowballC)
 First, lets install the State of the Union package. This package contains text of all the state of the Union addresses from Washington to Trump. Run `install.packages` to install the `sotu` package. 
 ```{r}
 library(sotu)
+
+
 ```
 
 This package includes both the metadata about these speeches in `sotu_meta` and the texts themselves in `sotu_texts`. Lets first look at the metadata associated with this package. 
@@ -47,6 +49,8 @@ This package also includes a function that will let us write all of the files to
 ```{r}
 file_paths <- sotu_dir(dir = "sotu_files")
 head(file_paths)
+
+
 ```
 
 What this does is create a new directory (sotu_files) and adds each State of the Union address as a text file. Notice each speech is its own .txt file that is comprised of just the text of the speech.
@@ -102,7 +106,8 @@ The function `unnest_tokens()` also has an option called token. Tokenizing by wo
 
 (@)Use the documentation to tokenize the dataset into sentences: 
 ```{r}
-
+sotu_sentences <- sotu_whole %>%
+  unnest_tokens(output = sentence, text, token = "sentences")
 ```
 
 We've talked about n-grams loosely in class. But lets define it more formally. An n-gram is a contiguous sequence of n items from a given sample of text or speech. The n stands for the number of items. So for example, a bi-gram is sets of two words. 
@@ -126,6 +131,8 @@ head(sotu_bigrams$bigram)
 (@) Use `unest_tokens()` to create tri-grams. 
 ```{r}
 
+sotu_trigrams <- sotu_whole %>%
+  unnest_tokens(trigram, text, token = "ngrams", n = 3)
 ```
 
 ### Stopwords
