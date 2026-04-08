@@ -245,12 +245,25 @@ sotu.length <- tidy_sotu %>%
 (@) Filter the dataset to address this discrepancy and the recreate these statistics: 
 ```{r}
 
-sotu.speech.text <- tidy_sotu %>%
-  count(president, doc_id, sotu_type)  %>% 
-  group_by(sotu_type) %>% 
+
+sotu.length.written <- tidy_sotu %>%
+  filter(sotu_type == "written") %>%
+  count(president, doc_id)  %>% 
+  group_by(president) %>% 
   summarize(avg_words = mean(n)) %>% 
   arrange(desc(avg_words))
-## not sure if this is what you are looking for, but we now have an average of length based on written vs spoken STOU. 
+
+
+
+sotu.length.speech <- tidy_sotu %>%
+  filter(sotu_type == "speech") %>%
+  count(president, doc_id)  %>% 
+  group_by(president) %>% 
+  summarize(avg_words = mean(n)) %>% 
+  arrange(desc(avg_words))
+
+
+## not sure if this is what you are looking for, but we now have an average of length based on written vs spoken STOU as separate data frames. 
 ```
 
 ### Term Frequency
@@ -269,7 +282,7 @@ tidy_sotu_rel.freq <- tidy_sotu %>%
 
 We can assume that words with a high frequency in the text are more important or significant. Here we can find the words with the most significance for each president: 
 ```{r}
-tidy_sotu %>%
+demo <- tidy_sotu %>%
   count(president, word)  %>%  # count n for each word
   group_by(president) %>% 
   mutate(n_tot = sum(n), # count total number of words per doc
