@@ -519,3 +519,5 @@ ib %>%
   filter(word1 %in% food_terms | word2 %in% food_terms) %>%
   count(word1, word2, sort = TRUE) %>%
   head(15)
+
+  ### relative frequency is basically what n-gram does. How many frequency per words. 
