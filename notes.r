@@ -522,3 +522,20 @@ ib %>%
 
   ### relative frequency is basically what n-gram does. How many frequency per words. 
 
+### everyting below relates to the prompt beginning on line 392
+
+mb_texts <- mind_body_full %>%
+  unnest_tokens(word, text) %>%
+  anti_join(updated_custom_stops)
+
+  mb_tf_idf <- mb_texts %>%
+  select(doc_id, word) %>%
+  count(doc_id, word, sort = TRUE)  %>%  
+  bind_tf_idf(word, doc_id, n) %>%
+  arrange(desc(tf_idf))
+
+  mb_custom_stops <- tibble(word = c("quarte", "tierce", "parry", "meas"))
+  updated_custom_stops <- bind_rows(stop_words, mb_custom_stops)
+
+  mb_texts_count <- mb_texts %>%
+    count(word, sort = TRUE)
