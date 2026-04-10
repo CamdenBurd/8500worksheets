@@ -439,9 +439,6 @@ mb_tf_idf <- mb_texts %>%
 mb_texts_count <- mb_texts %>%
     count(word, sort = TRUE)
 
-# lets not at least try to count by document to give us some fucking history, please. 
-
-
 
 (@) Choose one of the datasets from this repository or use one of your own: https://github.com/regan008/8510-TextAnalysisData. Note that there are both zip files with .txt files as well as separate metadata files for each publication in this repo. 
 
