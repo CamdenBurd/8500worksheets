@@ -125,9 +125,9 @@ ac_top_terms <- ac_topics %>%
 print(ac_top_terms)
 
 # Visualize
-ac_top <- ac_topics %>%
+ ac_topics %>%
   group_by(topic) %>%
-  top_n(8, beta) %>%
+  top_n(14, beta) %>%
   ungroup() %>%
   mutate(term = reorder_within(term, beta, topic)) %>%
   ggplot(aes(beta, term, fill = factor(topic))) +
