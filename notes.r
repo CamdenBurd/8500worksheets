@@ -539,3 +539,30 @@ mb_texts <- mind_body_full %>%
 
   mb_texts_count <- mb_texts %>%
     count(word, sort = TRUE)
+
+##### Class notes for April 13, 2026. 
+### topic moedeling - algorithm that groups workds that tend to appear together, finds "topics"in the text 
+## Latent Dirichlet Allocation (LDA) - analyzes which words appear together across the corpus, groups co-curring words into topics, calculates probabiliutes for each document-topic relationship
+## Mixture model, it does natural groupings in the data. You bring historical expertise. 
+
+## treats each document as a mixture of topic and each topic as a mixture of words
+
+## fitting the model
+## THe LDA function - takes document term matrix, 
+##K is the number of topics, they can be adjusted, 
+##seed referred to as 'setting' the seed. 
+## Method, different topics of topic models. Gibbs sampling tends to be the default. 
+## Alpha defines the distribution of topics. High alpha vs low alpha. 
+## Beta means probabily of words belonnging to a specific topic
+## Higher beta value leads to topics with more similar word contents
+## lower value results in tipics with more distinct and varied workd distributions. 
+## beta value  is the word-topic distribution 
+
+## Gamma value is proportion of a document being generated from each topic. 
+## Provides probablity of each document being generated from each topic 
+## High gamma valies for a particular during topic and document suggests that the document is heavilty influenced by that topic. 
+## gamma value is document-topic--can plot over time. When did particular topics spike. 
+## not all topics will make sense.
+install.packages("tm")
+install.packages("topicmodels")
+install.packages("lda")

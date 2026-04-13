@@ -367,7 +367,7 @@ library(ggplot2)
 
 
 sotu_word_pairs %>% 
-  filter(n >= 200) %>%  # only word pairs that occur 200 or more times
+  filter(n >= 100) %>%  # only word pairs that occur 100 or more times
   graph_from_data_frame() %>% #convert to graph
   ggraph(layout = "fr") + # place nodes according to the force-directed algorithm of Fruchterman and Reingold
   geom_edge_link(aes(edge_alpha = n, edge_width = n), edge_colour = "tomato") +
