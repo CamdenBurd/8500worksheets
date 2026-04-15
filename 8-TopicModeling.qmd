@@ -194,11 +194,11 @@ Before you start coding, articulate what you want to explore:
 
 (@) What corpus did you choose and why?
 
->
+> I chose Information Bulletin--not sure why. Just cause. I am mostly going to use it to run through programs through seeing whats in the the thing.  
 
 (@) What historical question(s) could topic modeling help you explore with this corpus? (Examples: How did discourse change over time? What topics dominated during specific periods? Can we detect shifts related to major historical events?)
 
->
+> I'll choose to track some topics over time. To see what sort of discourse changes in corpus in as the post-WW2 era progresses. 
 
 ### Step 2: Build Your Topic Model
 
@@ -206,17 +206,52 @@ Before you start coding, articulate what you want to explore:
 # Download and load your chosen corpus
 # Join with metadata
 # Tokenize and clean
+ib_texts <- readtext(paste("InfoBulletin/", "*.txt", sep=""))
+ib_metadata <- read.csv("https://raw.githubusercontent.com/regan008/8510-TextAnalysisData/refs/heads/main/ib-metadata.csv")
+ac_whole <- full_join(meta, ac_texts, by = c("filename" = "doc_id")) %>% as_tibble() 
+ib_meta <- as.data.frame(ib_metadata)
+ib_whole <- full_join(ib_meta, ib_texts, by = c("filename" = "doc_id")) %>% as_tibble() 
+
+ib_stop_words <- tibble(word = c("german", "germany", "berlin", "american", "Germany", "German"))
+ib_stop <- bind_rows(stop_words, ib_stop_words)
+
+tidy_ib <- ib_whole %>%
+  unnest_tokens(word, text) %>% 
+  filter(str_detect(word, "[a-z']$")) %>% 
+  anti_join(ib_stop)
+
+tidy_ib <- tidy_ib %>% filter(!grepl('[0-9]', word))
+
 
 
 ```
 
 ```{r}
-# Create your document-term matrix
-
+tidy_ib_words <- tidy_ib %>% count(filename, word)
+ib.dtm <- tidy_ib_words %>% 
+  cast_dtm(filename, word, n)
 
 ```
 
 ```{r}
+
+
+
+ib.lda <- LDA(ib.dtm, k = 15, control = list(seed = 1113))
+
+ib.topics <- tidy(ib.lda, matrix = "beta")
+
+ib.top.terms <- ib.topics %>%
+  arrange(desc(beta)) %>% 
+  group_by(topic) %>% slice(1:5)
+
+ib.top.terms %>%
+  mutate(term = reorder_within(term, beta, topic)) %>%
+  ggplot(aes(beta, term, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ topic, scales = "free") +
+  scale_y_reordered()
+
 # Experiment with different k values (number of topics)
 # Start with k = 10, then try 15, 20, 25, etc. Sometimes the "right" number of topics will be an odd number like 12.
 # What number gives you the most interpretable topics?

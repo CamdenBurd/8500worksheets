@@ -566,3 +566,53 @@ mb_texts <- mind_body_full %>%
 install.packages("tm")
 install.packages("topicmodels")
 install.packages("lda")
+
+
+### Notes for Worksheet #9
+## notes for the "on your own" section of the assignment. 
+
+file_paths <- system.file("InfoBulletin/")
+ib_texts <- readtext(paste("InfoBulletin/", "*.txt", sep=""))
+ib_metadata <- read.csv("https://raw.githubusercontent.com/regan008/8510-TextAnalysisData/refs/heads/main/ib-metadata.csv")
+ac_whole <- full_join(meta, ac_texts, by = c("filename" = "doc_id")) %>% as_tibble() 
+ib_meta <- as.data.frame(ib_metadata)
+ib_whole <- full_join(ib_meta, ib_texts, by = c("filename" = "doc_id")) %>% as_tibble() 
+
+tidy_ib <- ib_whole %>%
+  unnest_tokens(word, text) %>% 
+  filter(str_detect(word, "[a-z']$")) %>% 
+  anti_join(ib_stop)
+
+### add custom stop words 
+
+ib_stop_words <- tibble(word = c("german", "germany", "berlin", "american", "Germany", "German"))
+ib_stop <- bind_rows(stop_words, ib_stop_words)
+
+
+tidy_ib <- tidy_ib %>% filter(!grepl('[0-9]', word))
+
+tidy_ib_words <- tidy_ib %>% count(filename, word)
+ib.dtm <- tidy_ib_words %>% 
+  cast_dtm(filename, word, n)
+
+ib.lda <- LDA(ib.dtm, k = 15, control = list(seed = 1113))
+ib.lda 
+
+
+ib.topics <- tidy(ib.lda, matrix = "beta")
+head(ib.topics)
+
+ib.top.terms <- ib.topics %>%
+  arrange(desc(beta)) %>% 
+  group_by(topic) %>% slice(1:5)
+
+ib.top.terms %>%
+  mutate(term = reorder_within(term, beta, topic)) %>%
+  ggplot(aes(beta, term, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ topic, scales = "free") +
+  scale_y_reordered()
+
+
+ib.documents <- tidy(ib.lda, matrix = "gamma")
+head(ac.documents)
