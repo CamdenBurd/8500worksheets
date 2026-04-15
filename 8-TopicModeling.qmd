@@ -269,6 +269,7 @@ ib.top.terms %>%
 # Generate top terms for each topic
 
 
+
 ```
 
 ```{r}
@@ -295,6 +296,8 @@ ib.top.terms %>%
 ```{r}
 # Join document-topic probabilities with metadata
 # Plot topics over time
+
+ib.documents <- tidy(ib.lda, matrix = "gamma")
 
 
 ```
