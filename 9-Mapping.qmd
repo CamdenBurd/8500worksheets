@@ -16,6 +16,8 @@ library(tidyverse)
 library(DigitalMethodsData)
 library(ggmap)
 library(tidygeocoder)
+
+
 ```
 
 ### Geocoding
@@ -37,13 +39,25 @@ Now we have latitude and longitude coordinates for our data.
 
 (@) Use this approach to geocode the `UndergroundRR` data. 
 ```{r}
+library(DigitalMethodsData)
+data("UndergroundRR")
+head(undergroundRR)
 
+undergroundRRgeocode <- undergroundRR %>% geocode(city = City, state = State, method='osm', lat = latitude, long = longitude)
+
+head(undergroundRRgeocode)
 ```
 
 
 (@) Geocode the Boston Women Voters dataset. Note that the data does include street addresses but because they are broken into parts - street address number, street, etc - you'll need to combine them into a full address to pass to the geocoding function. 
 ```{r}
 data("BostonWomenVoters")
+head(BostonWomenVoters)
+boston_fulladdres <- BostonWomenVoters %>% mutate(fulladdress = paste(Street.Number.on.April.1, Street.of.Residence.on.April.1, sep = " ")) %>% mutate(city = "Boston") %>% mutate(state = "MA")
+
+boston_geocode2 <- boston_fulladdres %>% slice(5:75) %>% geocode( address = fulladdress, lat = latitude, long = longitude)
+
+
 ```
 
 ### Maps with `ggplot()`

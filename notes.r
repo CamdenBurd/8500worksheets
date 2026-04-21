@@ -616,3 +616,14 @@ ib.top.terms %>%
 
 ib.documents <- tidy(ib.lda, matrix = "gamma")
 head(ac.documents)
+
+
+### Notes for April 20, 2026
+library(tidyverse)
+library(ggplot2)
+library(leaflet)
+library(tidygeocoder)
+
+## need shape file, data, coordinate data
+## check out D3 JS, now easier to use with AI
+
