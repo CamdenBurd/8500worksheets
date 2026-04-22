@@ -77,13 +77,13 @@ usa <- map_data("state")
 
 (@) `map_data()` generates a data frame. Take a look at this data frame, what types of data are included? 
 
-> 
+>  It is a map with a vareity of places. Thus a map of America. 
 
 
 We can now pass this data to ggplot to create a simple basemap. When we wanted to create a bar plot using `ggplot()` we called `geom_bar`. When we wanted to create a line chart we used `geom_point()` and `geom_line()`. The sample principle applies here and `ggplot()` provides a geom for maps.
 ```{r}
 ggplot() + 
-  geom_map( data = usa, map = usa, aes(long, lat, map_id=region))
+  geom_map( data = usa, map = usa, aes(long, lat, map_id=region)) + coord_fixed(1.3)
 ```
 
 Now we have a basemap! But what if we want to layer data onto it. Lets add all of the locations in `gayguides` from 1965. First we need to set up our data: 
@@ -95,12 +95,17 @@ gayguides <- gayguides %>% filter(Year == 1965)
 And then we can use the same mapping code from above but this time we're going to add an additional geom -- `geom_point()` which will point to each of our locations from 1965. 
 ```{r}
 ggplot() + 
-  geom_map(data = usa, map = usa, aes(long, lat, map_id=region), fill = "lightgray", color = "black") +
+  geom_map(data = usa, map = usa, aes(long, lat, map_id=region), fill = "lightgray", color = "black") + coord_fixed(1.3) +
   geom_point(data = gayguides, mapping = aes(x = lon, y = lat), color = "red")
 ```
 
 (@) This map looks slightly funny, but that is because the data includes entries outside of the contiguous United States. Try filtering out those entries and mapping this again. Can you change the color or size of the points? Can you add a title?
 ```{r}
+gayguides_nahawaii <- gayguides %>% filter(state != "HI") %>% filter(Year == 1965)
+
+ggplot() + 
+  geom_map(data = usa, map = usa, aes(long, lat, map_id=region), fill = "lightgray", color = "black") + coord_fixed(1.3) +
+  geom_point(data = gayguides_nahawaii, mapping = aes(x = lon, y = lat), color = "red")
 
 ```
 
